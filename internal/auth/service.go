@@ -4,15 +4,16 @@ import (
 	"errors"
 	"fmt"
 	"go/adv-demo/internal/user"
+	"go/adv-demo/pkg/di"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
 type AuthService struct {
-	UserRepo *user.UserRepo
+	UserRepo di.IUserRepository
 }
 
-func NewAuthService(user *user.UserRepo) *AuthService {
+func NewAuthService(user di.IUserRepository) *AuthService {
 	return &AuthService{
 		UserRepo: user,
 	}

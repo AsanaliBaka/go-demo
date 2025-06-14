@@ -40,13 +40,20 @@ func initData(db *gorm.DB) {
 		Name:     "brathu",
 	})
 }
+
+func removeData(db *gorm.DB) {
+	db.Unscoped().
+		Where("email = ?,asan@brat.03 ").
+		Delete(&user.User{})
+}
 func TestLoginSucces(t *testing.T) {
 	//prepare
 	db := initDb()
 	initData(db)
+
 	ts := httptest.NewServer(App())
 	defer ts.Close()
-
+	defer removeData(db)
 	data, _ := json.Marshal(&auth.LoginRequest{
 		Email:    "asan@brat.03	",
 		Password: "123456Ba91",
